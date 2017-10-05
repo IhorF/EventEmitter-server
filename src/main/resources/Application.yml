@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost/eventemitter?useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+app:
+   origin:
+      url: http://localhost:3000
+logging:
+  file: eventemitter.log
+  level:
+    com.softserve.academy.spaced.repetition: DEBUG
+    org.springframework: INFO
