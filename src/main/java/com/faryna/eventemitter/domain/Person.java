@@ -1,6 +1,7 @@
 package com.faryna.eventemitter.domain;
 
 import com.faryna.eventemitter.DTO.EntityInterface;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -22,8 +23,11 @@ public class Person implements EntityInterface {
     @Column(name = "telephon", nullable = false, length = 45)
     private String telephon;
 
+    @JsonIgnore
     @ManyToMany
-    @JoinTable(name = "person_has_event", joinColumns = @JoinColumn(name = "person_id_person", referencedColumnName = "id_person", nullable = false), inverseJoinColumns = @JoinColumn(name = "event_id_event", referencedColumnName = "id_event", nullable = false))
+    @JoinTable(name = "events_persons", joinColumns = {
+            @JoinColumn(name = "person_id")},
+            inverseJoinColumns = {@JoinColumn(name = "event_id")})
     private Set<Event> events;
 
     public Person() {
@@ -108,5 +112,16 @@ public class Person implements EntityInterface {
 
     public void setEvents(Set<Event> events) {
         this.events = events;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", telephon='" + telephon + '\'' +
+                ", events=" + events +
+                '}';
     }
 }

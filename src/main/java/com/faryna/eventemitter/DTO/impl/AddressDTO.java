@@ -8,4 +8,12 @@ public class AddressDTO extends DTO<Address> {
 
     public  AddressDTO(Address address, Link link) {super(address, link);}
 
+
+    public Integer getEventId(){return  getEntity().getId();}
+
+    public String getName() {
+        return getEntity().getName();
+    }
+
+
 }

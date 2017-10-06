@@ -1,5 +1,6 @@
 package com.faryna.eventemitter.domain;
 
+
 import com.faryna.eventemitter.DTO.EntityInterface;
 
 import javax.persistence.*;

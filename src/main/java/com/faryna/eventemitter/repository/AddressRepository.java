@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface AddressRepository extends JpaRepository<Address, Integer> {
 
     Address getAddressById(Integer id);
+    void deleteById(Integer id);
+
 }
