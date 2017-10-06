@@ -17,6 +17,8 @@ public class EventService {
     public Event getEventById (Integer id){ return eventRepository.findOne(id);}
 
     public  void  addEvent (Event event) { eventRepository.save(event);}
+
+    public List<Event> getEventList(){return eventRepository.findAll();}
 }
 
 

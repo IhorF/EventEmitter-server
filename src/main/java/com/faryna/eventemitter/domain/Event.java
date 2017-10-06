@@ -1,8 +1,10 @@
 package com.faryna.eventemitter.domain;
 
 import com.faryna.eventemitter.DTO.EntityInterface;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.util.Date;
 import java.util.Set;
 
@@ -19,26 +21,33 @@ public class Event implements EntityInterface {
     private String name;
 
     @Basic
-    @Column(name = "description", nullable = false, length = 200)
+    @Column(name = "description", nullable = false, length = 500)
     private String description;
 
     @Basic
     @Column(name = "date")
+    @Temporal(TemporalType.DATE)
     private Date date;
 
-    @ManyToMany(mappedBy = "events")
-    private Set<Address> adresses;
-
-    @ManyToMany(mappedBy = "events")
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "events_persons", joinColumns = {
+            @JoinColumn(name = "event_id")},
+            inverseJoinColumns = {@JoinColumn(name = "person_id")})
     private Set<Person> persons;
 
     public Event() {
+    }
+
+    public Event(Integer id) {
+        this.id = id;
     }
 
     public Event(String name, String description, Date date) {
         this.name = name;
         this.description = description;
         this.date = date;
+
     }
 
     public Event(Integer id, String name, String description, Date date) {
@@ -46,6 +55,7 @@ public class Event implements EntityInterface {
         this.name = name;
         this.description = description;
         this.date = date;
+
     }
 
     public Integer getId() {
@@ -91,7 +101,8 @@ public class Event implements EntityInterface {
         if (name != null ? !name.equals(event.name) : event.name != null) return false;
         if (description != null ? !description.equals(event.description) : event.description != null) return false;
         if (date != null ? !date.equals(event.date) : event.date != null) return false;
-
+       /* if (time != null ? !time.equals(event.time) : event.time != null) return false;
+*/
         return true;
     }
 
@@ -105,19 +116,22 @@ public class Event implements EntityInterface {
     }
 
 
-    public Set<Address> getAdresses() {
-        return adresses;
-    }
-
-    public void setAdresses(Set<Address> adresses) {
-        this.adresses = adresses;
-    }
-
     public Set<Person> getPersons() {
         return persons;
     }
 
     public void setPersons(Set<Person> persons) {
         this.persons = persons;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                ", persons=" + persons +
+                '}';
     }
 }
